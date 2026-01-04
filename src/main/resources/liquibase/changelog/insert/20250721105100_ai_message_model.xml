@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet id="20250721105100-1" author="carlos.max">
+        <insert tableName="tb_ai_message_model">
+            <column name="DOCUMENT_TYPE" value="NFCE"/>
+            <column name="JSON_MODEL" value='{"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}'/>
+            <column name="PLAN_TYPE" value="COMPLETE"/>
+        </insert>
+    </changeSet>
+
+
+</databaseChangeLog>

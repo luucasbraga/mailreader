@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110508-1" author="marco.gomes">
+        <createTable tableName="tb_document">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="COMPANY_ID" type="BIGINT"/>
+            <column name="FILE_NAME" type="VARCHAR(255)"/>
+            <column name="AMAZON_PATH" type="TEXT"/>
+            <column name="MESSAGE_ID" type="TEXT"/>
+            <column name="STAGE" type="VARCHAR(50)"/>
+            <column name="EXPENSE_JSON" type="LONGTEXT"/>
+            <column name="TEXT_EXTRACTED" type="LONGTEXT"/>
+            <column name="EXPENSE_TYPE" type="VARCHAR(50)"/>
+            <column name="CREATED_AT" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_AT" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DOCUMENT_STATUS" type="VARCHAR(50)"/>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_DOCUMENT_COMPANY"
+                                 baseTableName="tb_document"
+                                 baseColumnNames="COMPANY_ID"
+                                 referencedTableName="tb_company"
+                                 referencedColumnNames="ID"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>

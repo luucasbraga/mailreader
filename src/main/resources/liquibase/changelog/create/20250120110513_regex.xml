@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110513-1" author="marco.gomes">
+        <createTable tableName="tb_regex">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ISSUER_CNPJ" type="VARCHAR(255)"/>
+            <column name="TOTAL_VALUE" type="VARCHAR(255)"/>
+            <column name="DUE_DATE" type="VARCHAR(255)"/>
+            <column name="ISSUE_DATE" type="VARCHAR(255)"/>
+            <column name="NUMBER" type="VARCHAR(255)"/>
+            <column name="SERIE" type="VARCHAR(255)"/>
+
+            <column name="IBGE_CODE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TYPE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint constraintName="UK_REGEX_TYPE_IBGE_CODE"
+                             tableName="tb_regex"
+                             columnNames="TYPE, IBGE_CODE"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250924143000-1" author="fidelis.silva">
+        <addColumn tableName="tb_client_group">
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints unique="true" />
+            </column>
+            <column name="LAST_MAIL_READ" type="timestamp" />
+            <column name="STATUS" type="VARCHAR(50)" defaultValue="NOT_PROCESSING" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250924143000-2" author="fidelis.silva">
+        <addColumn tableName="tb_company">
+            <column name="FANTASY_NAME" type="VARCHAR(255)" />
+            <column name="LEGAL_NAME" type="VARCHAR(255)" />
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20250924143000-3" author="fidelis.silva">
+        <addColumn tableName="tb_document">
+            <column name="CLIENT_GROUP_ID" type="BIGINT" />
+        </addColumn>
+
+        <addForeignKeyConstraint constraintName="FK_CLIENT_GROUP_DOCUMENT"
+                                 baseTableName="tb_document"
+                                 baseColumnNames="CLIENT_GROUP_ID"
+                                 referencedTableName="tb_client_group"
+                                 referencedColumnNames="ID"/>
+    </changeSet>
+
+    <changeSet id="20250924143000-4" author="fidelis.silva">
+        <createIndex indexName="idx_company_cnpj" tableName="tb_company" unique="false">
+            <column name="CNPJ"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20250924143000-5" author="fidelis.silva">
+        <createIndex indexName="idx_company_fantasy_name" tableName="tb_company" unique="false">
+            <column name="FANTASY_NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20250924143000-6" author="fidelis.silva">
+        <createIndex indexName="idx_company_legal_name" tableName="tb_company" unique="false">
+            <column name="LEGAL_NAME"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20250924143000-7" author="fidelis.silva">
+        <createIndex indexName="idx_document_client_group" tableName="tb_document" unique="false">
+            <column name="CLIENT_GROUP_ID"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20250924143000-8" author="fidelis.silva">
+        <createIndex indexName="idx_document_stage_status" tableName="tb_document" unique="false">
+            <column name="stage"/>
+            <column name="document_status"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,44 @@
+#!/usr/bin/env groovy
+
+node {
+    stage('Checkout') {
+        checkout scm
+    }
+
+    gitlabCommitStatus('build') {
+        stage('check java') {
+            sh "java -version"
+            sh "mvn -v"
+        }
+
+        stage('Package') {
+            sh "chmod +x mvnw"
+            sh "export JAVA_HOME=/usr/lib/jvm/jdk-21-oracle-x64 && ./mvnw -Pprod clean install -DskipTests"
+        }
+
+        stage('Construir Imagem') {
+            sh "cp DockerfileProd Dockerfile"
+            docker.withRegistry('https://harbor.groupsoftware.com.br', 'harbor-credentials') {
+                app = docker.build("group-condominios/grouppay/mailreader")
+            }
+        }
+
+        stage('Testar imagem') {
+            app.inside {
+                sh 'echo "Imagem aprovada!"'
+            }
+        }
+
+        stage('Publicar imagem'){
+            docker.withRegistry('https://harbor.groupsoftware.com.br', 'harbor-credentials') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push("latest")
+            }
+        }
+
+        stage('Deploy para Rancher'){
+
+        }
+
+    }
+}

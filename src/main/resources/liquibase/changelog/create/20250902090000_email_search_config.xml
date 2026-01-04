@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250902090000-1" author="fidelis.silva">
+        <createTable tableName="tb_email_search_config">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="UUID" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="CREATED_AT" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_AT" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="TINYINT(1)" defaultValue="TRUE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CONFIGURATION_EMAIL" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PASSWORD" type="VARCHAR(100)" />
+
+            <column name="PROTOCOL" type="VARCHAR(50)" />
+
+            <column name="SERVER" type="VARCHAR(100)" />
+
+            <column name="PORT" type="INTEGER" />
+
+            <column name="TEST_SEND_DATE_TIME" type="TIMESTAMP" />
+
+            <column name="TEST_SEND_STATUS" type="VARCHAR(100)" />
+
+            <column name="TEST_SEND_EMAIL" type="VARCHAR(100)" />
+
+            <column name="CRYPTOGRAPHY" type="VARCHAR(50)" />
+
+            <column name="company_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="tb_email_search_config"
+                baseColumnNames="company_id"
+                constraintName="fk_email_search_config_company"
+                referencedColumnNames="id"
+                referencedTableName="tb_company"
+        />
+    </changeSet>
+
+</databaseChangeLog>

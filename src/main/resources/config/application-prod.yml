@@ -1,0 +1,116 @@
+spring:
+    config:
+        activate:
+            on-profile: prod
+    datasource:
+        url: jdbc:mysql://${DB_HOST}:${DB_PORT}/mailreader_db?allowMultiQueries=true&createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&useTimezone=true&serverTimezone=UTC
+        username: ${DB_USER}
+        password: ${DB_PWD}
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.MySQLDialect
+    liquibase:
+        change-log: classpath:/liquibase/master.xml
+        enabled: true
+    mail:
+        host: ${MAIL_HOST}
+        port: ${MAIL_PORT}
+        username: ${MAIL_ACCESSKEY}
+        password: ${MAIL_SECRETKEY}
+        from: ${MAIL_FROM}
+    thymeleaf:
+        cache: true
+
+reader:
+    timeout-connection: 600000 # 10 minutos
+    dir: PDF
+    download: baixados
+    max-attachments: 10
+    max-emails: 25
+
+group-pay:
+    auth: ${GROUP_PAY_ORQUESTRADOR_URL}
+    core: ${GROUP_PAY_BASE_URL}
+
+python:
+    path: C:/Users/marcogomes_frwk/AppData/Local/Programs/Python/Python312/python.exe
+    scripts: python-scripts/extract_text.py
+
+openai:
+    api:
+        key: ${OPENAI_API_KEY}
+        url: ${OPENAI_API_URL:https://api.openai.com/v1/chat/completions}
+        model: ${OPENAI_API_MODEL:gpt-4o-mini}
+
+gemini:
+    api:
+        api-key: ${GEMINI_API_KEY}
+        base-url: ${GEMINI_API_URL:https://generativelanguage.googleapis.com/v1beta}
+        model-name: ${GEMINI_API_MODEL:gemini-1.5-flash-8b}
+        generate-content-endpoint: ${GEMINI_API_ENDPOINT:generateContent}
+
+aws:
+    s3-upload:
+        access-key-id: ${S3_UPLOAD_BUCKET_ACCESS_KEY}
+        secret-access-key: ${S3_UPLOAD_BUCKET_SECRET}
+        bucket-name: ${S3_UPLOAD_BUCKET_NAME}
+        region: ${S3_UPLOAD_REGION:sa-east-1}
+    s3-download:
+        access-key-id: ${S3_DOWNLOAD_BUCKET_ACCESS_KEY}
+        secret-access-key: ${S3_DOWNLOAD_BUCKET_SECRET}
+        bucket-name: ${S3_DOWNLOAD_BUCKET_NAME}
+        region: ${S3_DOWNLOAD_REGION:sa-east-1}
+
+springdoc:
+    api-docs:
+        path: /api-docs
+    swagger-ui:
+        enabled: true
+
+server:
+    error:
+        whitelabel:
+            enabled: false
+
+quartz:
+    jobs:
+        jobDecryptPdf:
+            enabled: true
+        jobDeleteFromDownload:
+            enabled: true
+        jobEmailProcess:
+            enabled: true
+        jobExtractorExpense:
+            enabled: true
+        jobCompanyMatching:
+            enabled: true
+        jobSentToGroupPay:
+            enabled: true
+        jobS3Upload:
+            enabled: true
+        jobS3Download:
+            enabled: true
+        jobDeleteFromLocal:
+            enabled: true
+        jobExtractorText:
+            enabled: true
+        jobUpdateCompany:
+            enabled: true
+        jobResultGroupPay:
+            enabled: true
+
+logging.level.org.springframework:
+    jdbc: INFO
+    scheduling: INFO
+
+email-processing-retry-delay: 20
+document-processing-retry-delay: 5
+jwt-secret-key: 9b111e11a9fb33b950d8a9056eb83e212f75c57c
+jwt-expiration: 28800000 # 8 horas em milissegundos
+
+authApiKeyMailValidation: ${AUTH_API_KEY_MAIL_VALIDATION}

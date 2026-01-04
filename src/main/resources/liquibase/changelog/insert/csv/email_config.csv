@@ -1,0 +1,7 @@
+ID,PROVIDER,IMAP_HOST,IMAP_PORT,SMTP_HOST,SMTP_PORT,STARTTLS_ENABLE,AUTH
+NULL,gmail,imap.gmail.com,993,smtp.gmail.com,587,TRUE,TRUE
+NULL,outlook,imap.outlook.com,993,smtp.office365.com,587,TRUE,TRUE
+NULL,yahoo,imap.mail.yahoo.com,993,smtp.mail.yahoo.com,587,TRUE,TRUE
+NULL,zoho,imap.zoho.com,993,smtp.zoho.com,587,TRUE,TRUE
+NULL,icloud,imap.mail.me.com,993,smtp.mail.me.com,587,TRUE,TRUE
+NULL,aol,imap.aol.com,993,smtp.aol.com,587,TRUE,TRUE

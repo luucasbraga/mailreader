@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <include file="/liquibase/changelog/create/20250120110501_state.xml"/>
+    <include file="/liquibase/changelog/create/20250120110502_city.xml"/>
+    <include file="/liquibase/changelog/create/20250120110503_client_group.xml"/>
+    <include file="/liquibase/changelog/create/20250120110504_company.xml"/>
+    <include file="/liquibase/changelog/create/20250120110505_user.xml"/>
+    <include file="/liquibase/changelog/create/20250120110506_email_config.xml"/>
+    <include file="/liquibase/changelog/create/20250120110507_email_search-term.xml"/>
+    <include file="/liquibase/changelog/create/20250120110508_document.xml"/>
+    <include file="/liquibase/changelog/create/20250120110509_document_stage_history.xml"/>
+    <include file="/liquibase/changelog/create/20250120110510_update_company.xml"/>
+    <include file="/liquibase/changelog/create/20250120110511_ai_message_model.xml"/>
+    <include file="/liquibase/changelog/create/20250120110513_regex.xml"/>
+    <include file="/liquibase/changelog/create/20250120110515_document_extractor_types.xml"/>
+    <include file="liquibase/changelog/insert/20250120134401_ai_message_model.xml"/>
+    <include file="liquibase/changelog/insert/20250120134402_email_config.xml"/>
+    <include file="liquibase/changelog/insert/20250120134403_email_search_term.xml"/>
+    <include file="/liquibase/changelog/insert/20250120134404_states.xml"/>
+    <include file="/liquibase/changelog/insert/20250120134405_cities.xml"/>
+    <include file="/liquibase/changelog/insert/20250120134406_regex.xml"/>
+    <include file="/liquibase/changelog/update/20250214165501_document.xml"/>
+    <include file="/liquibase/changelog/update/20250224145000_regex.xml"/>
+    <include file="/liquibase/changelog/insert/20250721105100_ai_message_model.xml"/>
+    <include file="/liquibase/changelog/create/20250902090000_email_search_config.xml"/>
+    <include file="/liquibase/changelog/update/20250902150000_drop_unique_constraint_email.xml"/>
+    <include file="/liquibase/changelog/drop/20250910124000_drop_email_config.xml"/>
+    <include file="/liquibase/changelog/update/20250912100000_add_column_stacktrace.xml"/>
+    <include file="/liquibase/changelog/create/20250922170000_email_access_log.xml"/>
+    <include file="/liquibase/changelog/update/20250924143000_email_changes.xml"/>
+
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+package br.com.groupsoftware.grouppay.extratoremail.extractor.invoice;
+
+import br.com.groupsoftware.grouppay.extratoremail.domain.entity.Document;
+import br.com.groupsoftware.grouppay.extratoremail.domain.model.Expense;
+import br.com.groupsoftware.grouppay.extratoremail.extractor.ExpenseExtractor;
+
+/**
+ * ‘Interface’ que define o contrato para extração de despesas a partir de textos de documentos CT-e.
+ * Implementações desta ‘interface’ devem transformar o conteúdo textual numa instância de {@link Expense}.
+ *
+ * <p>Essa ‘interface’ é usada para processar e extrair informações financeiras de documentos específicos
+ * de conhecimento de transporte (CT-e), garantindo que os dados sejam convertidos de maneira
+ * estruturada e padronizada para o modelo de despesas.</p>
+ *
+ * @author Marco Willy
+ * @version 1.0
+ * @since 2025
+ */
+public interface CtExtractor extends ExpenseExtractor {
+    Expense getExpense(Document document);
+}

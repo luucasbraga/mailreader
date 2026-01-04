@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110504-1" author="marco.gomes">
+        <createTable tableName="tb_company">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="UUID" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="CITY_IBGE_CODE" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CLIENT_GROUP_ID" type="BIGINT"/>
+            <column name="ACTIVE" type="TINYINT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PASSWORD" type="VARCHAR(255)"/>
+            <column name="CNPJ" type="VARCHAR(20)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="LAST_MAIL_READ" type="TIMESTAMP"/>
+            <column name="LOCAL_PATH" type="VARCHAR(255)"/>
+            <column name="EMAIL_STATUS" type="VARCHAR(50)"/>
+            <column name="CREATED_AT" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATED_AT" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_COMPANY_CITY"
+                                 baseTableName="tb_company"
+                                 baseColumnNames="CITY_IBGE_CODE"
+                                 referencedTableName="tb_city"
+                                 referencedColumnNames="IBGE_CODE"
+                                 onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint constraintName="FK_COMPANY_CLIENT_GROUP"
+                                 baseTableName="tb_company"
+                                 baseColumnNames="CLIENT_GROUP_ID"
+                                 referencedTableName="tb_client_group"
+                                 referencedColumnNames="ID"
+                                 onDelete="SET NULL"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110510-1" author="marco.gomes">
+        <createTable tableName="tb_update_company">
+            <column name="ID" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="COMPANY_ID" type="BIGINT"/>
+            <column name="JSON" type="LONGTEXT"/>
+            <column name="UPDATE_STATUS" type="VARCHAR(50)"/>
+            <column name="CREATED_AT" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_UPDATE_COMPANY_COMPANY"
+                                 baseTableName="tb_update_company"
+                                 baseColumnNames="COMPANY_ID"
+                                 referencedTableName="tb_company"
+                                 referencedColumnNames="ID"
+                                 onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>

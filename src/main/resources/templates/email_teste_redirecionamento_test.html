@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <div th:fragment="bodyFragment">
+        <br/>
+        <p>
+            <span th:text="${msgHash}"></span>
+        </p>
+        <br/>
+        <p>
+            <span>
+                <b>uuidClienteGroup:</b>
+            </span>
+            <span th:text="${uuidClienteGroup}"></span>
+        </p>
+        <br/>
+        <p>
+            <span>
+                <b>emailRedirect:</b>
+            </span>
+            <span th:text="${emailRedirect}"></span>
+        </p>
+        <br/><br/>
+    </div>
+</html>

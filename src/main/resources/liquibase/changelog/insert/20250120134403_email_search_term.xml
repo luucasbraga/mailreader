@@ -1,0 +1,20 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120134403-1" author="marco.gomes">
+        <loadData file="classpath:liquibase/changelog/insert/csv/email_config.csv" tableName="tb_email_config"
+                  separator="," encoding="UTF-8" usePreparedStatements="true">
+            <column name="id" type="UUID"/>
+            <column name="provider" type="VARCHAR"/>
+            <column name="imap_host" type="VARCHAR"/>
+            <column name="imap_port" type="INT"/>
+            <column name="smtp_host" type="VARCHAR"/>
+            <column name="smtp_port" type="INT"/>
+            <column name="starttls_enable" type="BOOLEAN"/>
+            <column name="auth" type="BOOLEAN"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110502-1" author="marco.gomes">
+        <createTable tableName="tb_city">
+            <column name="IBGE_CODE" type="BIGINT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LATITUDE" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LONGITUDE" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CAPITAL" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SIAFI_ID" type="VARCHAR(4)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="AREA_CODE" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TIME_ZONE" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATE_CODE_UF" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="FK_CITY_STATE"
+                                 baseTableName="tb_city"
+                                 baseColumnNames="STATE_CODE_UF"
+                                 referencedTableName="tb_state"
+                                 referencedColumnNames="CODE_UF"/>
+    </changeSet>
+
+</databaseChangeLog>

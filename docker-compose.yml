@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:5.7
+    container_name: mailreader_db
+    environment:
+      MYSQL_ROOT_PASSWORD: Spanis@MySQL57
+      MYSQL_DATABASE: mailreader_db
+    ports:
+      - "3307:3306"  # Porta exposta localmente
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - spring_network
+    deploy:
+      restart_policy:
+        condition: any
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+
+  app:
+    build:
+      context: .
+    environment:
+      SPRING_PROFILES_ACTIVE: prod  # Ativar o perfil 'prod'
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mailreader_db?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Spanis@MySQL57
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_SHOW_SQL: false  # Desativado para produção
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+    ports:
+      - "8084:8084"
+    depends_on:
+      - db
+    networks:
+      - spring_network
+
+volumes:
+  db_data:
+    driver: local
+
+networks:
+  spring_network:

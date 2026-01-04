@@ -1,0 +1,264 @@
+databaseChangeLog:
+  # --- NFE: Exemplo com IBGE_CODE "3106200" (caso específico)
+  - changeSet:
+      id: 20250217161000-1
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ[:\\s-]*\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)VALOR\\s*TOTAL\\s*DA\\s*NOTA[:\\s-]*\\s*(R\\$)?\\s*([0-9]+(?:[.,][0-9]{2})?)"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA\\s*DA\\s*EMISSÃO[:\\s-]*\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*NFS-e\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "3106200"
+              - column:
+                  name: TYPE
+                  value: "NFE"
+
+  # --- NFE: Caso DEFAULT
+  - changeSet:
+      id: 20250217161000-2
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*NFS-e\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "NFE"
+
+  # --- NFSE (Nota Fiscal de Serviços Eletrônica)
+  - changeSet:
+      id: 20250217161000-3
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*NFSE\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "NFSE"
+
+  # --- NFCE (Nota Fiscal do Consumidor Eletrônica)
+  - changeSet:
+      id: 20250217161000-4
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*NFCE\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "NFCE"
+
+  # --- NF3E (Nota Fiscal de Energia Elétrica Eletrônica)
+  - changeSet:
+      id: 20250217161000-5
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*NF3E\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "NF3E"
+
+  # --- CTE (Conhecimento de Transporte Eletrônico)
+  - changeSet:
+      id: 20250217161000-6
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*CTE\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: "(?i)SÉRIE[:\\s-]*\\s*(\\d+)"
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "CTE"
+
+  # --- BOLETO (Boleto Bancário)
+  - changeSet:
+      id: 20250217161000-7
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*BOLETO\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: ""
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "BOLETO"
+
+  # --- FATURA (Faturas comuns)
+  - changeSet:
+      id: 20250217161000-8
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_regex
+            columns:
+              - column:
+                  name: ISSUER_CNPJ
+                  value: "(?i)CNPJ:?\\s*(\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2})"
+              - column:
+                  name: TOTAL_VALUE
+                  value: "(?i)(?:valor total do servi[cç]o|valor total da nota|valor do documento|total a pagar|valor a pagar|valor total|valor)[\\s\\.:=-]*\\s*(R\\$|R§)?\\s*([0-9]+(?:[.,][0-9]{2,3})*(?:[.,][0-9]{2}))"
+              - column:
+                  name: DUE_DATE
+                  value: "(?i)Vencimento\\s*[:\\-]?\\s*(\\d{2}[\\/\\-]\\d{2}[\\/\\-]\\d{4})"
+              - column:
+                  name: ISSUE_DATE
+                  value: "(?i)DATA DE EMISSÃO\\s*(\\d{2}/\\d{2}/\\d{4})"
+              - column:
+                  name: NUMBER
+                  value: "(?i)N[uú]mero\\s*da\\s*FATURA\\s*[:\\-]?\\s*(\\d+)"
+              - column:
+                  name: SERIE
+                  value: ""
+              - column:
+                  name: IBGE_CODE
+                  value: "DEFAULT"
+              - column:
+                  name: TYPE
+                  value: "FATURA"

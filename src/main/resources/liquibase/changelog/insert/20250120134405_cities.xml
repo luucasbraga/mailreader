@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120134405-1" author="marco.gomes">
+        <loadData file="classpath:liquibase/changelog/insert/csv/cities.csv" tableName="tb_city"
+                  separator="," encoding="UTF-8" usePreparedStatements="true">
+            <column name="id" type="UUID"/>
+            <column name="nome" type="VARCHAR"/>
+            <column name="estado_id" type="UUID"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>
+

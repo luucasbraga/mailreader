@@ -1,0 +1,304 @@
+databaseChangeLog:
+  - changeSet:
+      id: 20250120134401-1
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "FATURA"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-01-01","dataVencimento":"2024-01-10","valorTotal":1000.50,"emitente":"Empresa XYZ Ltda","cnpjCpfEmitente":"04562801000100","numero":"123456","serie":"001","itens":[{"descricao":"Serviço de Consultoria","quantidade":1,"valorUnitario":950.50,"valorTotalItem":950.50}]}
+
+  - changeSet:
+      id: 20250120134401-2
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: |
+                    ### Regras Específicas para NF3e:
+                    - O campo `numero` deve ser extraído de números como "Fatura de locação: 90516".
+                    - O campo `numeroMedidor` deve ser extraído de textos como "Instalação: 3004523443".
+                    - Descontos devem ser extraídos de textos como "Desconto 15% - R$ 18,36".
+                    - Valores de frete e seguro podem ser inferidos caso explícitos no texto.
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "NF3E"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-01-01","dataVencimento":"2024-01-10","valorTotal":1500.75,"emitente":"Empresa NF3","cnpjCpfEmitente":"04562801000100","numero":"98765","serie":"001","chaveAcesso":"12345678901234567890123456789012345678901234","valorFrete":50.00,"valorSeguro":10.00,"descontos":5.00,"itens":[{"descricao":"Produto A","quantidade":2,"valorUnitario":100.00,"valorTotalItem":200.00,"impostos":[{"tipoImposto":"ICMS","valor":18.00},{"tipoImposto":"IPI","valor":5.00}]}],"numeroMedidor":"MED123456","periodoInicio":"2024-01-01","periodoFim":"2024-01-31"}
+
+  - changeSet:
+      id: 20250120134401-3
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "NFC"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-02-15","dataVencimento":"2024-02-20","valorTotal":250.00,"emitente":"Loja de Consumidor","cnpjCpfEmitente":"04562801000100","numero":"789012","serie":"003","chaveAcesso":"98765432101234567890123456789012345678901234","valorFrete":0.00,"valorSeguro":0.00,"descontos":0.00,"itens":[{"descricao":"Produto Consumidor","quantidade":2,"valorUnitario":125.00,"valorTotalItem":250.00,"impostos":[{"tipoImposto":"ICMS","valor":18.00}]}]}
+
+  - changeSet:
+      id: 20250120134401-4
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "CTE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-03-15","dataVencimento":"2024-03-20","valorTotal":4500.00,"emitente":"Transportadora XYZ Ltda","cnpjCpfEmitente":"04562801000100","numero":"321654","serie":"002","remetente":"Remetente ABC","veiculo":"Caminhão ABC-1234","pesoCarga":1200.50,"tipoCarga":"Carga Geral","motorista":"João da Silva"}
+
+  - changeSet:
+      id: 20250120134401-5
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "NFE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-01-01","dataVencimento":"2024-01-10","valorTotal":1000.50,"emitente":"Empresa NF","cnpjCpfEmitente":"04562801000100","numero":"654321","serie":"002","chaveAcesso":"12345678901234567890123456789012345678901234","valorFrete":50.00,"valorSeguro":10.00,"descontos":5.00,"itens":[{"descricao":"Produto X","quantidade":3,"valorUnitario":100.00,"valorTotalItem":300.00,"impostos":[{"tipoImposto":"ICMS","valor":18.00},{"tipoImposto":"IPI","valor":5.00}]}]}
+
+  - changeSet:
+      id: 20250120134401-6
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "NFSE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao":"2024-05-01","dataVencimento":"2024-05-15","valorTotal":800.00,"emitente":"Prestador de Serviços Ltda","cnpjCpfEmitente":"04562801000100","numero":"789012","serie":"002","numero":"789012","serie":"002","codigoVerificacao":"VERIF123456","descricaoServico":"Consultoria em TI","aliquotaISS":5.00,"valorISS":40.00,"descontos":10.00,"valorLiquido":750.00}
+
+  - changeSet:
+      id: 20250120134401-7
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "COMPLETE"
+              - column:
+                  name: document_type
+                  value: "BOLETO"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-05", "dataVencimento": "2024-01-15", "valorTotal": 1500.75, "emitente": "Banco Emitente", "cnpjCpfEmitente": "04562801000100", "cnpjCpfDestinatario": "06554796002", "bancoEmissor": "Banco XYZ", "codigoBarras": "12345678901234567890123456789012345678901234", "linhaDigitavel": "12345.67890 12345.678901 12345.678901 1 23456789012345", "cedente": "Empresa Cedente", "nossoNumero": "987654321", "juros": 15.00, "multa": 10.00, "descontos": 5.00}
+
+  - changeSet:
+      id: 20250120134401-8
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "NFE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}
+
+  - changeSet:
+      id: 20250120134401-9
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "BOLETO"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456"}
+
+  - changeSet:
+      id: 20250120134401-10
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "FATURA"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456"}
+
+  - changeSet:
+      id: 20250120134401-11
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: |
+                    ### Regras Específicas para NF3e:
+                    - O campo `numero` deve ser extraído de números como "Fatura de locação: 90516".
+                    - O campo `numeroMedidor` deve ser extraído de textos como "Instalação: 3004523443".
+                    - Descontos devem ser extraídos de textos como "Desconto 15% - R$ 18,36".
+                    - Valores de frete e seguro podem ser inferidos caso explícitos no texto.
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "NF3E"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}
+
+  - changeSet:
+      id: 20250120134401-12
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "NFCE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}
+
+  - changeSet:
+      id: 20250120134401-13
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "NFSE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}
+
+  - changeSet:
+      id: 20250120134401-14
+      author: marco.gomes
+      changes:
+        - insert:
+            tableName: tb_ai_message_model
+            columns:
+              - column:
+                  name: document_rules
+                  value: null
+              - column:
+                  name: plan_type
+                  value: "BASIC"
+              - column:
+                  name: document_type
+                  value: "CTE"
+              - column:
+                  name: json_model
+                  value: >
+                    {"dataEmissao": "2024-01-01","dataVencimento": "2024-01-10","valorTotal": 1000.50,"emitente": "Empresa Emitente SA","cnpjCpfEmitente": "04562801000100","numero": "123456","serie": "001"}

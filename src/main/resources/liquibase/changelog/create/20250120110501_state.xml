@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20250120110501-1" author="marco.gomes">
+        <createTable tableName="tb_state">
+            <column name="CODE_UF" type="INT">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="UF" type="VARCHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LATITUDE" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LONGITUDE" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REGION" type="VARCHAR(12)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
