@@ -33,14 +33,17 @@ public class GeminiConfig {
     private String modelName;
     private String generateContentEndpoint;
 
-    private Map<ExpenseType, Class<?>> expenseTypeMap = Map.of(
-            ExpenseType.NFE, ExpenseNF.class,
-            ExpenseType.BOLETO, ExpenseBoleto.class,
-            ExpenseType.FATURA, ExpenseFatura.class,
-            ExpenseType.NFSE, ExpenseNFS.class,
-            ExpenseType.NF3E, ExpenseNF3.class,
-            ExpenseType.NFCE, ExpenseNFC.class,
-            ExpenseType.CTE, ExpenseCT.class
+    private Map<ExpenseType, Class<?>> expenseTypeMap = Map.ofEntries(
+            Map.entry(ExpenseType.NFE, ExpenseNF.class),
+            Map.entry(ExpenseType.BOLETO, ExpenseBoleto.class),
+            Map.entry(ExpenseType.FATURA, ExpenseFatura.class),
+            Map.entry(ExpenseType.NFSE, ExpenseNFS.class),
+            Map.entry(ExpenseType.NF3E, ExpenseNF3.class),
+            Map.entry(ExpenseType.NFCE, ExpenseNFC.class),
+            Map.entry(ExpenseType.CTE, ExpenseCT.class),
+            Map.entry(ExpenseType.DARF, ExpenseDARF.class),
+            Map.entry(ExpenseType.FGTS, ExpenseFGTS.class),
+            Map.entry(ExpenseType.GPS, ExpenseGPS.class)
     );
 
     public String getUrl() {

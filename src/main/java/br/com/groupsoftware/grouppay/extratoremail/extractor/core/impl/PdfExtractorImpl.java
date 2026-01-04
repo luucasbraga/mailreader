@@ -123,9 +123,11 @@ class PdfExtractorImpl implements PdfExtractor {
 
     private void updateDocumentWithContent(Document document, String content, DocumentExtractorType extractorType) {
         document.setDocumentExtractorTypes(List.of(extractorType));
+        // Normalização menos agressiva que preserva caracteres importantes para extração
+        // Preserva: letras, números, espaços, pontuação comum, símbolos monetários e especiais
         String extractedTextNormalized = content
-                .replaceAll("[^\\p{L}\\p{N}\\s:/.-]", " ") // remove símbolos "lixo"
-                .replaceAll("\\s+", " ") // normaliza espaços
+                .replaceAll("[^\\p{L}\\p{N}\\s:/.\\-,;()\\[\\]{}|#*+=<>\"'`~^&!?\\\\@$%R]", " ") // remove apenas símbolos realmente indesejados
+                .replaceAll("\\s+", " ") // normaliza espaços múltiplos
                 .trim();
         String safeExtractedText = extractedTextNormalized.substring(0, Math.min(65500, extractedTextNormalized.length()));
         document.setTextExtracted(safeExtractedText);

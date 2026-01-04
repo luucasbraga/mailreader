@@ -20,6 +20,9 @@ public enum ExpenseType {
     CTE,   // Conhecimento de Transporte Eletrônico
     BOLETO, // Boleto Bancário
     FATURA, // Faturas comuns
+    DARF,  // Documento de Arrecadação de Receitas Federais
+    FGTS,  // Guia do FGTS Digital
+    GPS,   // Guia da Previdência Social
     OUTRO   // Documento desconhecido ou não identificado
 }
 
