@@ -24,4 +24,7 @@ import org.springframework.stereotype.Component;
 public class SlipFacade {
     public final BillExtractor bill;
     public final BankSlipExtractor bank;
+    public final DarfExtractor darf;
+    public final FgtsExtractor fgts;
+    public final GpsExtractor gps;
 }

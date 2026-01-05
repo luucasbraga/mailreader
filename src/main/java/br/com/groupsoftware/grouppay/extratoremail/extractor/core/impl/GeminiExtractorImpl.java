@@ -110,7 +110,8 @@ public class GeminiExtractorImpl implements GeminiExtractor {
 
         Map<String, Object> geminiRequest = new HashMap<>();
         geminiRequest.put("contents", Collections.singletonList(Map.of("parts", Collections.singletonList(Map.of("text", prompt)))));
-        geminiRequest.put("generationConfig", Map.of("temperature", 0.2, "topP", 0.8, "topK", 40, "maxOutputTokens", 2048));
+        // Aumentado maxOutputTokens de 2048 para 8192 para suportar documentos com muitos itens
+        geminiRequest.put("generationConfig", Map.of("temperature", 0.2, "topP", 0.8, "topK", 40, "maxOutputTokens", 8192));
 
         try {
             return objectMapper.writeValueAsString(geminiRequest);

@@ -39,18 +39,21 @@ public class NfcExtractorImpl extends ExtractorTemplate implements NfcExtractor 
 
     @Override
     public Expense getExpense(Document document) {
+        String text = document.getTextExtracted();
         Regex regex = getRegexByDocument(document);
-        LocalDate dataEmissao = extractDate(document.getTextExtracted(), regex.getIssueDate());
-        String cnpjEmissor = extractByPattern(document.getTextExtracted(), regex.getIssuerCNPJ());
+        LocalDate dataEmissao = extractDate(text, regex.getIssueDate());
+        String cnpjEmissor = extractByPattern(text, regex.getIssuerCNPJ());
 
         ExpenseNFC despesaNFC = new ExpenseNFC();
         despesaNFC.setCnpjCpfEmitente(cnpjEmissor);
         despesaNFC.setDataEmissao(dataEmissao);
-        despesaNFC.setNumero(extractByPattern(document.getTextExtracted(), regex.getNumber()));
-        despesaNFC.setSerie(extractByPattern(document.getTextExtracted(), regex.getSerie()));
-        despesaNFC.setValorTotal(extractValueByPattern(document.getTextExtracted(), regex.getTotalValue()));
+        despesaNFC.setNumero(extractByPattern(text, regex.getNumber()));
+        despesaNFC.setSerie(extractByPattern(text, regex.getSerie()));
+        despesaNFC.setValorTotal(extractValueByPattern(text, regex.getTotalValue()));
         despesaNFC.setEmitente(cnpjEmissor);
-        despesaNFC.setDataEmissao(dataEmissao);
+
+        // Extrai a chave de acesso (44 dígitos, pode ter espaços no texto original)
+        despesaNFC.setChaveAcesso(extractChaveAcesso(text));
 
         return despesaNFC;
     }

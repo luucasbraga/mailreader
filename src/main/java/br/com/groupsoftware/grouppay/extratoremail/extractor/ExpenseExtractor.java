@@ -121,4 +121,40 @@ public interface ExpenseExtractor {
         }
         return null;
     }
+
+    /**
+     * Extrai a chave de acesso de documentos fiscais eletrônicos (44 dígitos).
+     * A chave pode estar com ou sem espaços no documento.
+     *
+     * @param text Texto do documento
+     * @return Chave de acesso com 44 dígitos, ou null se não encontrada
+     */
+    default String extractChaveAcesso(String text) {
+        // Tenta encontrar após os termos "Chave de Acesso" ou "CHAVE"
+        Pattern pattern = Pattern.compile("(?:Chave\\s+de\\s+Acesso|CHAVE)[:\\s]*([0-9\\s]{44,60})", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(text);
+        if (matcher.find()) {
+            String chave = matcher.group(1).replaceAll("\\s", "");
+            if (chave.length() == 44) {
+                return chave;
+            }
+        }
+
+        // Procura por sequência de 44 dígitos com ou sem espaços
+        Pattern pattern44 = Pattern.compile("([0-9\\s]{50,70})");
+        Matcher matcher44 = pattern44.matcher(text);
+        while (matcher44.find()) {
+            String candidate = matcher44.group(1).replaceAll("\\s", "");
+            if (candidate.length() == 44) {
+                // Valida se parece uma chave de acesso (começa com código UF válido)
+                String uf = candidate.substring(0, 2);
+                int ufCode = Integer.parseInt(uf);
+                if (ufCode >= 11 && ufCode <= 53) { // Códigos UF válidos
+                    return candidate;
+                }
+            }
+        }
+
+        return null;
+    }
 }

@@ -17,11 +17,17 @@ class TipoDocumento:
     CTE = "CT-e"
     BOLETO = "Boleto"
     FATURA = "Fatura"
+    DARF = "DARF"
+    FGTS = "FGTS"
+    GPS = "GPS"
     DESCONHECIDO = "Desconhecido"
 
 
 def identificar_tipo_documento(texto):
     patterns = {
+        TipoDocumento.DARF: r'Documento de Arrecada[cç][aã]o.*Receitas Federais|DARF|Receita Federal.*DARF',
+        TipoDocumento.FGTS: r'FGTS|Guia do FGTS|GFD|Fundo de Garantia',
+        TipoDocumento.GPS: r'GPS|Guia.*Previd[eê]ncia Social|Previd[eê]ncia.*Social.*Guia',
         TipoDocumento.NFSE: r'\bNFS-e\b|Nota Fiscal de Serviços',
         TipoDocumento.NFE: r'\bNF-e\b|Nota Fiscal Eletrônica\b',
         TipoDocumento.NFCE: r'\bNFC-e\b|Nota Fiscal ao Consumidor\b',

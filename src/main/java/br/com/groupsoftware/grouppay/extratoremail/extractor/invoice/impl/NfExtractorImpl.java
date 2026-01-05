@@ -59,6 +59,9 @@ class NfExtractorImpl extends ExtractorTemplate implements NfExtractor {
         despesaNF.setSerie(extractByPattern(document.getTextExtracted(), regex.getSerie()));
         despesaNF.setValorTotal(valorTotal);
 
+        // Extrai a chave de acesso (44 dígitos, pode ter espaços no texto original)
+        despesaNF.setChaveAcesso(extractChaveAcesso(text));
+
         return despesaNF;
     }
 }

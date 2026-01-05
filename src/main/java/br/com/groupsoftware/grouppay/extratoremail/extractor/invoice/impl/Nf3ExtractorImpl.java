@@ -34,18 +34,21 @@ class Nf3ExtractorImpl extends ExtractorTemplate implements Nf3Extractor {
 
     @Override
     public Expense getExpense(Document document) {
+        String text = document.getTextExtracted();
         Regex regex = getRegexByDocument(document);
-        LocalDate dataEmissao = extractDate(document.getTextExtracted(), regex.getIssueDate());
-        String cnpjEmissor = extractByPattern(document.getTextExtracted(), regex.getIssuerCNPJ());
+        LocalDate dataEmissao = extractDate(text, regex.getIssueDate());
+        String cnpjEmissor = extractByPattern(text, regex.getIssuerCNPJ());
 
         ExpenseNF3 despesaNF3 = new ExpenseNF3();
         despesaNF3.setCnpjCpfEmitente(cnpjEmissor);
         despesaNF3.setDataEmissao(dataEmissao);
-        despesaNF3.setNumero(extractByPattern(document.getTextExtracted(), regex.getNumber()));
-        despesaNF3.setSerie(extractByPattern(document.getTextExtracted(), regex.getSerie()));
-        despesaNF3.setValorTotal(extractValueByPattern(document.getTextExtracted(), regex.getTotalValue()));
+        despesaNF3.setNumero(extractByPattern(text, regex.getNumber()));
+        despesaNF3.setSerie(extractByPattern(text, regex.getSerie()));
+        despesaNF3.setValorTotal(extractValueByPattern(text, regex.getTotalValue()));
         despesaNF3.setEmitente(cnpjEmissor);
-        despesaNF3.setDataEmissao(dataEmissao);
+
+        // Extrai a chave de acesso (44 dígitos, pode ter espaços no texto original)
+        despesaNF3.setChaveAcesso(extractChaveAcesso(text));
 
         return despesaNF3;
     }
