@@ -5,3 +5,10 @@ spring:
         active: #spring.profiles.active#
 
 mailReaderInitialDate: "2025-09-20T00:00:00"
+
+# Microsoft OAuth2 Configuration
+microsoft:
+    oauth2:
+        client-id: ${MICROSOFT_OAUTH2_CLIENT_ID}
+        client-secret: ${MICROSOFT_OAUTH2_CLIENT_SECRET}
+        redirect-uri: ${MICROSOFT_OAUTH2_REDIRECT_URI}
