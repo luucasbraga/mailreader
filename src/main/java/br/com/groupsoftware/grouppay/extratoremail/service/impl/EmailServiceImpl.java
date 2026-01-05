@@ -19,7 +19,7 @@ import br.com.groupsoftware.grouppay.extratoremail.service.DocumentService;
 import br.com.groupsoftware.grouppay.extratoremail.service.EmailService;
 import br.com.groupsoftware.grouppay.extratoremail.service.GroupPayService;
 import br.com.groupsoftware.grouppay.extratoremail.service.MailService;
-import br.com.groupsoftware.grouppay.extratoremail.service.MicrosoftOAuth2Service;
+import br.com.groupsoftware.grouppay.extratoremail.service.OAuth2Service;
 import br.com.groupsoftware.grouppay.extratoremail.service.S3DownloadService;
 import br.com.groupsoftware.grouppay.extratoremail.util.GmailConfirmExecutor;
 import br.com.groupsoftware.grouppay.extratoremail.util.RestUtil;
@@ -91,7 +91,7 @@ class EmailServiceImpl implements EmailService {
     private final DocumentService documentService;
     private final S3DownloadService s3DownloadService;
     private final MailService mailService;
-    private final MicrosoftOAuth2Service microsoftOAuth2Service;
+    private final OAuth2Service oauth2Service;
     @Lazy
     @Autowired
     private GroupPayService groupPayService;
@@ -298,8 +298,10 @@ class EmailServiceImpl implements EmailService {
         // Prioriza OAuth2 delegado (por usuário) se estiver habilitado
         if (emailSearchConfig.getOauth2Enabled() != null && emailSearchConfig.getOauth2Enabled()) {
             try {
-                log.info("Usando OAuth2 delegado para email: {}", emailSearchConfig.getEmail());
-                password = microsoftOAuth2Service.getValidAccessToken(emailSearchConfig);
+                log.info("Usando OAuth2 delegado para email: {} (provedor: {})",
+                        emailSearchConfig.getEmail(),
+                        emailSearchConfig.getOauth2Provider());
+                password = oauth2Service.getValidAccessToken(emailSearchConfig);
             } catch (Exception e) {
                 log.error("Erro ao obter token OAuth2 delegado: {}", e.getMessage(), e);
                 throw new MessagingException("Falha ao obter token OAuth2 delegado. Pode ser necessário autorizar novamente: " + e.getMessage(), e);
