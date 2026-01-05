@@ -1,0 +1,135 @@
+PROMPT PARA PRÓXIMO AGENTE DE IA - REFATORAÇÃO OAUTH2 COM STRATEGY PATTERN
+==================================================================================
+
+CONTEXTO:
+---------
+O projeto MailReader possui implementação OAuth2 específica para Microsoft.
+No futuro, precisaremos suportar outros provedores (Google, Yahoo, etc.).
+
+OBJETIVO:
+---------
+Refatorar a implementação OAuth2 atual para usar Strategy Pattern, permitindo
+adicionar novos provedores facilmente sem modificar código existente.
+
+ARQUIVOS ATUAIS:
+----------------
+- MicrosoftOAuth2Service.java (interface)
+- MicrosoftOAuth2ServiceImpl.java (implementação)
+- MicrosoftOAuth2Controller.java (endpoints)
+- MicrosoftOAuth2TokenResponse.java (DTO)
+- EmailSearchConfig.java (entity - precisa novo campo oauth2_provider)
+- EmailServiceImpl.java (usa MicrosoftOAuth2Service)
+
+ESTRUTURA DESEJADA:
+-------------------
+
+1. OAuth2Strategy (interface)
+   - String getProviderName()
+   - String generateAuthorizationUrl(Long emailSearchConfigId)
+   - void exchangeCodeForTokens(String code, String state)
+   - String refreshAccessToken(EmailSearchConfig config)
+   - boolean isTokenExpired(EmailSearchConfig config)
+   - String getValidAccessToken(EmailSearchConfig config)
+   - boolean supportsEmailDomain(String email)
+
+2. MicrosoftOAuth2Strategy implements OAuth2Strategy
+   - Migrar código de MicrosoftOAuth2ServiceImpl
+   - Implementar supportsEmailDomain() para outlook.com, hotmail.com, etc.
+   - @Service("microsoftOAuth2Strategy")
+
+3. OAuth2StrategyFactory
+   - Injeta List<OAuth2Strategy> via @Autowired
+   - Método: getStrategy(String providerName)
+   - Método: getStrategyForEmail(String email)
+
+4. OAuth2Service (facade)
+   - Usa OAuth2StrategyFactory para delegar
+   - Métodos públicos delegam para strategy correta
+   - Este será injetado em EmailServiceImpl
+
+5. OAuth2Controller (unificado)
+   - GET /api/v1/oauth2/{provider}/authorize/{emailSearchConfigId}
+   - GET /api/v1/oauth2/{provider}/callback
+   - Substituir MicrosoftOAuth2Controller
+
+6. Banco de Dados
+   - Adicionar coluna oauth2_provider VARCHAR(50) em tb_email_search_config
+   - Criar migração Liquibase: 20260105130000_add_oauth2_provider_column.xml
+   - Atualizar EmailSearchConfig.java com novo campo
+
+7. Configuração
+   Estrutura em application.yml:
+   ```yaml
+   oauth2:
+     providers:
+       microsoft:
+         client-id: ${MICROSOFT_OAUTH2_CLIENT_ID}
+         client-secret: ${MICROSOFT_OAUTH2_CLIENT_SECRET}
+         redirect-uri: ${MICROSOFT_OAUTH2_REDIRECT_URI}
+         authorization-endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/authorize
+         token-endpoint: https://login.microsoftonline.com/common/oauth2/v2.0/token
+         scopes: https://outlook.office365.com/IMAP.AccessAsUser.All offline_access
+       google:  # Placeholder para futuro
+         enabled: false
+   ```
+
+8. @ConfigurationProperties
+   - Criar OAuth2ProviderProperties para carregar configs
+   - Criar OAuth2ProviderConfig (record) para cada provedor
+
+TAREFAS EM ORDEM:
+-----------------
+1. Criar OAuth2Strategy interface
+2. Criar OAuth2StrategyFactory
+3. Criar OAuth2Service (facade)
+4. Renomear e refatorar MicrosoftOAuth2ServiceImpl → MicrosoftOAuth2Strategy
+5. Atualizar EmailSearchConfig com campo oauth2_provider
+6. Criar migração Liquibase para novo campo
+7. Criar OAuth2Controller unificado
+8. Atualizar EmailServiceImpl para usar OAuth2Service
+9. Refatorar application.yml para estrutura multi-provider
+10. Criar @ConfigurationProperties classes
+11. Atualizar OAUTH2_SETUP.md com novo padrão
+12. Deletar arquivos antigos: MicrosoftOAuth2Service, MicrosoftOAuth2Controller
+
+REQUISITOS IMPORTANTES:
+-----------------------
+- Manter backward compatibility: dados Microsoft existentes devem funcionar
+- Usar @Service, @Autowired, @RequiredArgsConstructor (padrão do projeto)
+- Seguir estrutura de packages existente
+- Migração Liquibase deve popular oauth2_provider='microsoft' para registros existentes
+- Testes devem continuar funcionando
+
+EXEMPLO DE USO APÓS REFATORAÇÃO:
+---------------------------------
+
+// Endpoint para Microsoft (igual a antes funcionalmente):
+GET /api/v1/oauth2/microsoft/authorize/123
+
+// Futuro - Google:
+GET /api/v1/oauth2/google/authorize/456
+
+// No código (EmailServiceImpl):
+// ANTES:
+password = microsoftOAuth2Service.getValidAccessToken(emailSearchConfig);
+
+// DEPOIS:
+password = oauth2Service.getValidAccessToken(emailSearchConfig);
+// Factory detecta provedor automaticamente
+
+CRITÉRIOS DE SUCESSO:
+---------------------
+✓ Implementação Microsoft funciona exatamente igual
+✓ Fácil adicionar novo provedor (apenas criar nova Strategy)
+✓ Código limpo e manutenível
+✓ Testes passando
+✓ Documentação atualizada
+✓ Sem quebrar funcionalidades existentes
+
+COMEÇAR POR:
+------------
+Leia o arquivo REFACTORING_OAUTH2_STRATEGY.md para detalhes completos,
+depois execute as tarefas na ordem listada acima.
+
+Consulte a estrutura de código existente para seguir os mesmos padrões
+de nomenclatura, packages e estilo de código do projeto.
