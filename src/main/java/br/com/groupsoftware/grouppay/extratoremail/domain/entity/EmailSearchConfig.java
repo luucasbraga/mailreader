@@ -86,4 +86,16 @@ public class EmailSearchConfig implements Serializable {
     @Column
     private String stacktrace;
 
+    @Column(name = "OAUTH2_ENABLED")
+    private Boolean oauth2Enabled = false;
+
+    @Column(name = "OAUTH2_ACCESS_TOKEN", columnDefinition = "TEXT")
+    private String oauth2AccessToken;
+
+    @Column(name = "OAUTH2_REFRESH_TOKEN", columnDefinition = "TEXT")
+    private String oauth2RefreshToken;
+
+    @Column(name = "OAUTH2_TOKEN_EXPIRY")
+    private LocalDateTime oauth2TokenExpiry;
+
 }

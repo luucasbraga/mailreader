@@ -33,5 +33,6 @@
     <include file="/liquibase/changelog/update/20250912100000_add_column_stacktrace.xml"/>
     <include file="/liquibase/changelog/create/20250922170000_email_access_log.xml"/>
     <include file="/liquibase/changelog/update/20250924143000_email_changes.xml"/>
+    <include file="/liquibase/changelog/update/20260105120000_add_oauth2_columns.xml"/>
 
 </databaseChangeLog>

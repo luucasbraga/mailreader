@@ -19,6 +19,7 @@ import br.com.groupsoftware.grouppay.extratoremail.service.DocumentService;
 import br.com.groupsoftware.grouppay.extratoremail.service.EmailService;
 import br.com.groupsoftware.grouppay.extratoremail.service.GroupPayService;
 import br.com.groupsoftware.grouppay.extratoremail.service.MailService;
+import br.com.groupsoftware.grouppay.extratoremail.service.MicrosoftOAuth2Service;
 import br.com.groupsoftware.grouppay.extratoremail.service.S3DownloadService;
 import br.com.groupsoftware.grouppay.extratoremail.util.GmailConfirmExecutor;
 import br.com.groupsoftware.grouppay.extratoremail.util.RestUtil;
@@ -90,6 +91,7 @@ class EmailServiceImpl implements EmailService {
     private final DocumentService documentService;
     private final S3DownloadService s3DownloadService;
     private final MailService mailService;
+    private final MicrosoftOAuth2Service microsoftOAuth2Service;
     @Lazy
     @Autowired
     private GroupPayService groupPayService;
@@ -292,15 +294,28 @@ class EmailServiceImpl implements EmailService {
     @Override
     public Store connectToEmailStore(Properties properties, EmailSearchConfig emailSearchConfig, boolean usarOAuth2MicrosftAzure) throws MessagingException {
         String password;
-        if (usarOAuth2MicrosftAzure) {
+
+        // Prioriza OAuth2 delegado (por usuário) se estiver habilitado
+        if (emailSearchConfig.getOauth2Enabled() != null && emailSearchConfig.getOauth2Enabled()) {
             try {
+                log.info("Usando OAuth2 delegado para email: {}", emailSearchConfig.getEmail());
+                password = microsoftOAuth2Service.getValidAccessToken(emailSearchConfig);
+            } catch (Exception e) {
+                log.error("Erro ao obter token OAuth2 delegado: {}", e.getMessage(), e);
+                throw new MessagingException("Falha ao obter token OAuth2 delegado. Pode ser necessário autorizar novamente: " + e.getMessage(), e);
+            }
+        } else if (usarOAuth2MicrosftAzure) {
+            // Fallback para client credentials (antigo) - deprecado
+            try {
+                log.warn("Usando OAuth2 client credentials (deprecado) para email: {}", emailSearchConfig.getEmail());
                 password = getAccessTokenOAuth2MicrosoftAzure();
             } catch (Exception e) {
                 log.error("Erro ao obter token OAuth2 do Microsoft Azure: {}", e.getMessage(), e);
                 throw new MessagingException("Falha ao obter token OAuth2 do Microsoft Azure: " + e.getMessage(), e);
             }
         } else {
-                password = Base64PasswordUtil.decode(emailSearchConfig.getPassword());
+            // Autenticação com senha (IMAP/POP3 tradicional)
+            password = Base64PasswordUtil.decode(emailSearchConfig.getPassword());
         }
         
         String protocol = emailSearchConfig.getProtocol().getNome();
@@ -343,7 +358,8 @@ class EmailServiceImpl implements EmailService {
         properties.put("mail." + protocol + ".timeout", timeoutConnection);
         properties.put("mail." + protocol + ".writetimeout", timeoutConnection);
 
-        if (usarOAuth2MicrosftAzure) {
+        // Habilita XOAUTH2 se OAuth2 delegado estiver habilitado OU se for conta Microsoft
+        if ((emailConfig.getOauth2Enabled() != null && emailConfig.getOauth2Enabled()) || usarOAuth2MicrosftAzure) {
             properties.put("mail." + protocol + ".auth.mechanisms", "XOAUTH2");
         }
 
