@@ -34,5 +34,6 @@
     <include file="/liquibase/changelog/create/20250922170000_email_access_log.xml"/>
     <include file="/liquibase/changelog/update/20250924143000_email_changes.xml"/>
     <include file="/liquibase/changelog/update/20260105120000_add_oauth2_columns.xml"/>
+    <include file="/liquibase/changelog/update/20260105130000_add_oauth2_provider_column.xml"/>
 
 </databaseChangeLog>

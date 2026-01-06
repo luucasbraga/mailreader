@@ -1,0 +1,33 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet id="20260105130000-1" author="claude">
+        <comment>
+            Adiciona coluna oauth2_provider para suportar múltiplos provedores OAuth2 (Microsoft, Google, Yahoo, etc.).
+            Parte da refatoração para Strategy Pattern.
+        </comment>
+        <addColumn tableName="tb_email_search_config">
+            <column name="oauth2_provider" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20260105130000-2" author="claude">
+        <comment>
+            Popula oauth2_provider='microsoft' para todos os registros existentes que já têm OAuth2 habilitado.
+            Garante backward compatibility com implementação anterior específica da Microsoft.
+        </comment>
+        <sql>
+            UPDATE tb_email_search_config
+            SET oauth2_provider = 'microsoft'
+            WHERE oauth2_enabled = true
+              AND oauth2_access_token IS NOT NULL
+              AND oauth2_provider IS NULL;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

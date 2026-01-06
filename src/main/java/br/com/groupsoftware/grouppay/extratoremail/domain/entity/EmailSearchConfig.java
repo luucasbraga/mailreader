@@ -89,6 +89,9 @@ public class EmailSearchConfig implements Serializable {
     @Column(name = "OAUTH2_ENABLED")
     private Boolean oauth2Enabled = false;
 
+    @Column(name = "OAUTH2_PROVIDER", length = 50)
+    private String oauth2Provider;
+
     @Column(name = "OAUTH2_ACCESS_TOKEN", columnDefinition = "TEXT")
     private String oauth2AccessToken;
 
